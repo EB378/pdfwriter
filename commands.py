@@ -38,10 +38,12 @@ def draw_text(
     alignment=None,
     centered=False,
     justify_width=None,
+    bold=False,
+    underline=False,
+    strikethrough=False,
 ):
     """
-    Draws text with optional size, color, background color, alignment, and centering,
-    while ensuring it stays within the page boundaries.
+    Draws text with options for size, color, background, alignment, and effects (bold, underline, strikethrough).
 
     Parameters:
         c (canvas): ReportLab canvas object.
@@ -52,12 +54,17 @@ def draw_text(
         color (Color): Text color. Default: STANDARD_TEXT_COLOR.
         bg_color (Color): Background color of the text. Default: None.
         font (str): Font name. Default: STANDARD_FONT.
-        alignment (str): Text alignment ('left', 'center', 'right', 'justify'). Default: None.
+        alignment (str): Text alignment ('left', 'center', 'right', 'justify').
         centered (bool): Whether the coordinates refer to the center of the text.
-        justify_width (float): Width to justify the text within. Required for 'justify' alignment.
+        justify_width (float): Width to justify the text within.
+        bold (bool): Whether the text should be bold. Default: False.
+        underline (bool): Whether the text should be underlined. Default: False.
+        strikethrough (bool): Whether the text should have a strikethrough. Default: False.
     """
     # Use default values if not specified
     font = font or STANDARD_FONT
+    if bold and not font.endswith("-Bold"):
+        font += "-Bold"
     size = size or STANDARD_FONT_SIZE
     color = color or STANDARD_TEXT_COLOR
 
@@ -73,33 +80,13 @@ def draw_text(
         y -= size / 2
 
     # Ensure text stays within page boundaries
-    if x < MARGIN:
+    margin = 50  # Adjust as needed
+    if x < margin:
         print(f"Warning: Text '{text}' shifted right to fit within left margin.")
-        x = MARGIN
-    elif x + text_width > PAGE_WIDTH - MARGIN:
+        x = margin
+    elif x + text_width > PAGE_WIDTH - margin:
         print(f"Warning: Text '{text}' shifted left to fit within right margin.")
-        x = PAGE_WIDTH - MARGIN - text_width
-
-    if y < MARGIN + size:
-        print(f"Warning: Text '{text}' shifted up to fit within bottom margin.")
-        y = MARGIN + size
-    elif y > PAGE_HEIGHT - MARGIN:
-        print(f"Warning: Text '{text}' shifted down to fit within top margin.")
-        y = PAGE_HEIGHT - MARGIN
-
-    # Handle text alignment
-    if alignment == "center":
-        x -= text_width / 2
-    elif alignment == "right":
-        x -= text_width
-    elif alignment == "justify" and justify_width:
-        words = text.split()
-        space_width = (justify_width - sum(c.stringWidth(w, font, size) for w in words)) / (len(words) - 1)
-        cursor_x = x
-        for word in words:
-            c.drawString(cursor_x, y, word)
-            cursor_x += c.stringWidth(word, font, size) + space_width
-        return  # Exit the function after justification
+        x = PAGE_WIDTH - margin - text_width
 
     # Draw background color if specified
     if bg_color:
@@ -110,59 +97,40 @@ def draw_text(
     c.setFillColor(color)
     c.drawString(x, y, text)
 
+    # Draw underline if specified
+    if underline:
+        c.setLineWidth(1)
+        c.setStrokeColor(color)
+        c.line(x, y - 2, x + text_width, y - 2)
 
-def draw_underlined_text(c, text, x, y, size=None, color=None):
+    # Draw strikethrough if specified
+    if strikethrough:
+        c.setLineWidth(1)
+        c.setStrokeColor(color)
+        c.line(x, y + size / 3, x + text_width, y + size / 3)
+
+
+def draw_image(
+    c,
+    img_path,
+    x,
+    y,
+    width=None,
+    height=None,
+    crop=False,
+    dim=False,
+    dim_amount=50,  # Accepts percentage (0 to 100)
+    centered=False,
+    crop_top=0,
+    crop_bottom=0,
+    crop_left=0,
+    crop_right=0,
+):
     """
-    Draws underlined text.
+    Draws an image with optional cropping, dimming (configurable amount in percentage), and centering.
 
     Parameters:
-        c (canvas): ReportLab canvas object.
-        text (str): Text to underline.
-        x (float): X-coordinate.
-        y (float): Y-coordinate.
-        size (float): Font size.
-        color (Color): Text color.
-    """
-    draw_text(c, text, x, y, size=size, color=color)
-    text_width = c.stringWidth(text, STANDARD_FONT, size or STANDARD_FONT_SIZE)
-    c.setStrokeColor(color or STANDARD_TEXT_COLOR)
-    c.setLineWidth(1)
-    c.line(x, y - 2, x + text_width, y - 2)
-
-
-def draw_strikethrough_text(c, text, x, y, size=None, color=None):
-    """
-    Draws strikethrough text.
-
-    Parameters:
-        c (canvas): ReportLab canvas object.
-        text (str): Text to strikethrough.
-        x (float): X-coordinate.
-        y (float): Y-coordinate.
-        size (float): Font size.
-        color (Color): Text color.
-    """
-    draw_text(c, text, x, y, size=size, color=color)
-    text_width = c.stringWidth(text, STANDARD_FONT, size or STANDARD_FONT_SIZE)
-    c.setStrokeColor(color or STANDARD_TEXT_COLOR)
-    c.setLineWidth(1)
-    c.line(x, y + (size or STANDARD_FONT_SIZE) / 3, x + text_width, y + (size or STANDARD_FONT_SIZE) / 3)
-
-
-def draw_image(c, img_path, x, y, width=None, height=None, crop=False, dim=False, centered=False):
-    """
-    Draws an image with optional cropping, dimming, and centering.
-
-    Parameters:
-        c (canvas): ReportLab canvas object.
-        img_path (str): Path to the image.
-        x (float): X-coordinate of the image's center (if `centered` is True).
-        y (float): Y-coordinate of the image's center (if `centered` is True).
-        width (float): Width of the image.
-        height (float): Height of the image.
-        crop (bool): Whether to crop the image. Default: False.
-        dim (bool): Whether to dim the image. Default: False.
-        centered (bool): Whether the coordinates refer to the center of the image.
+        dim_amount (int): Percentage for dimming (0 to 100). Default: 50.
     """
     if not os.path.exists(img_path):
         print(f"Error: Image file '{img_path}' not found.")
@@ -172,15 +140,26 @@ def draw_image(c, img_path, x, y, width=None, height=None, crop=False, dim=False
         if img.mode == "RGBA":  # Convert RGBA to RGB to support JPEG
             img = img.convert("RGB")
 
+        # Apply cropping if crop=True
         if crop:
-            img = img.crop((10, 10, img.width - 10, img.height - 10))
+            img_width, img_height = img.size
+            left = crop_left
+            top = crop_top
+            right = img_width - crop_right
+            bottom = img_height - crop_bottom
+            img = img.crop((left, top, right, bottom))
+
+        # Apply dimming if dim=True
         if dim:
+            dim_factor = dim_amount / 100  # Convert percentage to a factor (0.0 to 1.0)
             enhancer = ImageEnhance.Brightness(img)
-            img = enhancer.enhance(0.5)
+            img = enhancer.enhance(dim_factor)
+
+        # Resize the image if width and height are provided
         if width and height:
             img = img.resize((int(width), int(height)))
 
-        # Use a unique name for the temporary file
+        # Generate a unique temporary file for the image
         temp_img_path = f"temp_image_{uuid.uuid4().hex}.jpg"
         img.save(temp_img_path, "JPEG")
 
@@ -189,7 +168,10 @@ def draw_image(c, img_path, x, y, width=None, height=None, crop=False, dim=False
             x -= width / 2
             y -= height / 2
 
+        # Draw the image
         c.drawImage(temp_img_path, x, y, width=width, height=height, mask="auto")
+
+        # Remove the temporary file
         os.remove(temp_img_path)
 
 

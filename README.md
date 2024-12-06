@@ -1,4 +1,4 @@
-Here’s the fully updated `README.md` file with the new features, including alignment, boundary handling, and justification.
+Here’s the updated **`README.md`** file with the new functionality for configuring **dimming amount (0-100)**, integrated bold/underline/strikethrough options in the `TEXT` command, and cropping parameters for images.
 
 ---
 
@@ -6,7 +6,7 @@ Here’s the fully updated `README.md` file with the new features, including ali
 
 ## **Overview**
 
-This project is a dynamic PDF generator that allows users to create customized PDFs by specifying commands in an `input.txt` file. The system supports text, images, tables, and more, with advanced options such as alignment, centering, and boundary enforcement.
+This project is a dynamic PDF generator that allows users to create customized PDFs by specifying commands in an `input.txt` file. The system supports text, images, tables, and more, with advanced options such as alignment, dimming, effects (bold, underline, strikethrough), and boundary enforcement.
 
 ---
 
@@ -33,22 +33,25 @@ pdf_generator/
 2. **Enhanced Text Options**: 
    - Font size, colors, background colors.
    - Alignment: `left`, `right`, `center`, or `justify`.
-3. **Centering Options**: Use coordinates as the center of the object for text or images.
-4. **Boundary Handling**: Ensures text and images do not go outside the page margins.
-5. **Table Creation**: Generate tables with custom data, column widths, and styles.
-6. **Multi-Page Support**: Add page breaks and manage content across multiple pages.
-7. **Automatic Watcher**: Use `watcher.py` to auto-generate the PDF on changes to `input.txt`.
+   - Effects: Bold, underline, and strikethrough.
+3. **Image Features**:
+   - Configurable dimming amount (0-100%).
+   - Cropping with fine-grained offsets for each side.
+   - Centered placement.
+4. **Table Creation**: Generate tables with custom data, column widths, and styles.
+5. **Multi-Page Support**: Add page breaks and manage content across multiple pages.
+6. **Automatic Watcher**: Use `watcher.py` to auto-generate the PDF on changes to `input.txt`.
 
 ---
 
 ## **Commands Reference**
 
 ### **1. `TEXT`**
-Adds a line of text with various customization options.
+Adds a line of text with various customization options, including effects.
 
 - **Format**:
   ```
-  TEXT||<text>||<x>||<y>||<size>||<color>||<bg_color>||<font>||<alignment>||<centered>||<justify_width>
+  TEXT||<text>||<x>||<y>||<size>||<color>||<bg_color>||<font>||<alignment>||<centered>||<justify_width>||<bold>||<underline>||<strikethrough>
   ```
 - **Parameters**:
   - `<text>`: The text to be added.
@@ -56,25 +59,28 @@ Adds a line of text with various customization options.
   - `<y>`: Y-coordinate for the text (center if `centered=true`).
   - `<size>`: Font size (e.g., `12` or `16`). Leave blank for default.
   - `<color>`: Hexadecimal color for the text (e.g., `#FF6600`). Leave blank for default.
-  - `<bg_color>`: Hexadecimal background color for the text. Leave blank for none.
+  - `<bg_color>`: Hexadecimal background color of the text. Leave blank for none.
   - `<font>`: Font name (e.g., `Helvetica-Bold`). Leave blank for default.
   - `<alignment>`: Text alignment (`left`, `center`, `right`, `justify`). Leave blank for default.
   - `<centered>`: `true` to use coordinates as the center of the text. Default: `false`.
   - `<justify_width>`: Width to justify the text within. Required for `justify` alignment.
+  - `<bold>`: `true` for bold text.
+  - `<underline>`: `true` for underlined text.
+  - `<strikethrough>`: `true` for strikethrough text.
 - **Example**:
   ```
-  TEXT||Hello, World!||300||400||16||#FF6600||#FFFF00||Helvetica-Bold||center||true||
-  TEXT||This text is justified||50||600||12||#000000||||justify||false||400
+  TEXT||Bold and Underlined Text||150||500||14||#FF6600||none||Helvetica||center||true||||true||true||false
+  TEXT||Justified Text Example||50||750||12||#333333||none||Helvetica||||true||400||false||false||false
   ```
 
 ---
 
 ### **2. `IMAGE`**
-Adds an image with optional resizing, cropping, dimming, and centering.
+Adds an image with optional resizing, dimming, and cropping.
 
 - **Format**:
   ```
-  IMAGE||<path>||<x>||<y>||<width>||<height>||<crop>||<dim>||<centered>
+  IMAGE||<path>||<x>||<y>||<width>||<height>||<crop>||<dim>||<dim_amount>||<centered>||<crop_top>||<crop_bottom>||<crop_left>||<crop_right>
   ```
 - **Parameters**:
   - `<path>`: Path to the image file (e.g., `assets/logo.png`).
@@ -84,63 +90,20 @@ Adds an image with optional resizing, cropping, dimming, and centering.
   - `<height>`: Height of the image.
   - `<crop>`: `true` to crop the image; `false` otherwise.
   - `<dim>`: `true` to dim the image; `false` otherwise.
+  - `<dim_amount>`: Percentage of brightness (0 to 100). Defaults to `50`.
   - `<centered>`: `true` to use coordinates as the center of the image. Default: `false`.
+  - `<crop_top>`: Pixels to crop from the top. Default: `0`.
+  - `<crop_bottom>`: Pixels to crop from the bottom. Default: `0`.
+  - `<crop_left>`: Pixels to crop from the left. Default: `0`.
+  - `<crop_right>`: Pixels to crop from the right. Default: `0`.
 - **Example**:
   ```
-  IMAGE||assets/logo.png||300||300||150||75||false||true||true
+  IMAGE||assets/logo.png||300||300||200||100||true||true||70||true||10||20||5||5
   ```
 
 ---
 
-### **3. `UNDERLINE`**
-Adds an underlined line of text.
-
-- **Format**:
-  ```
-  UNDERLINE||<text>||<x>||<y>||<size>||<color>
-  ```
-- **Example**:
-  ```
-  UNDERLINE||Underlined Text||100||650||12||#0000FF
-  ```
-
----
-
-### **4. `STRIKETHROUGH`**
-Adds text with a strikethrough.
-
-- **Format**:
-  ```
-  STRIKETHROUGH||<text>||<x>||<y>||<size>||<color>
-  ```
-- **Example**:
-  ```
-  STRIKETHROUGH||Struck-through Text||100||600||12||#FF0000
-  ```
-
----
-
-### **5. `LINE_BREAK`**
-Adds vertical spacing between lines.
-
-- **Format**:
-  ```
-  LINE_BREAK
-  ```
-
----
-
-### **6. `PAGE_BREAK`**
-Inserts a new page in the PDF.
-
-- **Format**:
-  ```
-  PAGE_BREAK
-  ```
-
----
-
-### **7. `TABLE`**
+### **3. `TABLE`**
 Creates a table with rows and columns.
 
 - **Format**:
@@ -156,6 +119,26 @@ Creates a table with rows and columns.
 - **Example**:
   ```
   TABLE||[['Task', 'Due Date', 'Complete'], ['Pack', '12/10/2023', '[ ]'], ['Move', '12/15/2023', '[ ]']]||50||700||[150, 100, 80]||None
+  ```
+
+---
+
+### **4. `LINE_BREAK`**
+Adds vertical spacing between lines.
+
+- **Format**:
+  ```
+  LINE_BREAK
+  ```
+
+---
+
+### **5. `PAGE_BREAK`**
+Inserts a new page in the PDF.
+
+- **Format**:
+  ```
+  PAGE_BREAK
   ```
 
 ---

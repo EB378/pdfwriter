@@ -31,7 +31,7 @@ def create_pdf(file_name, instructions):
         command = parts[0]
 
         if command == "TEXT":
-            text, x, y, size, color, bg_color, font, alignment, centered, justify_width = (
+            text, x, y, size, color, bg_color, font, alignment, centered, justify_width, bold, underline, strikethrough = (
                 parts[1],
                 int(parts[2]),
                 int(parts[3]),
@@ -42,33 +42,29 @@ def create_pdf(file_name, instructions):
                 parts[8] if parts[8] else None,
                 parts[9].lower() == "true" if len(parts) > 9 and parts[9] else False,
                 float(parts[10]) if len(parts) > 10 and parts[10] else None,
+                parts[11].lower() == "true" if len(parts) > 11 and parts[11] else False,
+                parts[12].lower() == "true" if len(parts) > 12 and parts[12] else False,
+                parts[13].lower() == "true" if len(parts) > 13 and parts[13] else False,
             )
-            draw_text(c, text, x, y, size=size, color=color, bg_color=bg_color, font=font, alignment=alignment, centered=centered, justify_width=justify_width)
-
-
-
-        elif command == "UNDERLINE":
-            text, x, y, size, color = (
-                parts[1],
-                int(parts[2]),
-                int(parts[3]),
-                float(parts[4]) if parts[4] else None,
-                colors.HexColor(parts[5]) if parts[5] else None,
+            draw_text(
+                c,
+                text,
+                x,
+                top_down_y(y),
+                size=size,
+                color=color,
+                bg_color=bg_color,
+                font=font,
+                alignment=alignment,
+                centered=centered,
+                justify_width=justify_width,
+                bold=bold,
+                underline=underline,
+                strikethrough=strikethrough,
             )
-            draw_underlined_text(c, text, x, y, size=size, color=color)
-
-        elif command == "STRIKETHROUGH":
-            text, x, y, size, color = (
-                parts[1],
-                int(parts[2]),
-                int(parts[3]),
-                float(parts[4]) if parts[4] else None,
-                colors.HexColor(parts[5]) if parts[5] else None,
-            )
-            draw_strikethrough_text(c, text, x, y, size=size, color=color)
 
         elif command == "IMAGE":
-            img_path, x, y, width, height, crop, dim, centered = (
+            img_path, x, y, width, height, crop, dim, dim_amount, centered, crop_top, crop_bottom, crop_left, crop_right = (
                 parts[1],
                 float(parts[2]),
                 float(parts[3]),
@@ -76,17 +72,37 @@ def create_pdf(file_name, instructions):
                 float(parts[5]) if parts[5] else None,
                 parts[6].lower() == "true" if parts[6] else False,
                 parts[7].lower() == "true" if parts[7] else False,
-                parts[8].lower() == "true" if len(parts) > 8 and parts[8] else False,
+                float(parts[8]) if len(parts) > 8 and parts[8].isdigit() else 50,  # Default dim amount to 50%
+                parts[9].lower() == "true" if len(parts) > 9 and parts[9] else False,
+                int(parts[10]) if len(parts) > 10 and parts[10] else 0,
+                int(parts[11]) if len(parts) > 11 and parts[11] else 0,
+                int(parts[12]) if len(parts) > 12 and parts[12] else 0,
+                int(parts[13]) if len(parts) > 13 and parts[13] else 0,
             )
-            draw_image(c, img_path, x, y, width=width, height=height, crop=crop, dim=dim, centered=centered)
 
+            draw_image(
+                c,
+                img_path,
+                x,
+                top_down_y(y),
+                width=width,
+                height=height,
+                crop=crop,
+                dim=dim,
+                dim_amount=dim_amount,
+                centered=centered,
+                crop_top=crop_top,
+                crop_bottom=crop_bottom,
+                crop_left=crop_left,
+                crop_right=crop_right,
+            )
 
         elif command == "TABLE":
             table_data = eval(parts[1])  # Parse table data as a list of lists
             x, y = int(parts[2]), int(parts[3])
             col_widths = eval(parts[4]) if parts[4] else None
             row_heights = eval(parts[5]) if parts[5] else None
-            draw_table(c, table_data, x, y, col_widths=col_widths, row_heights=row_heights)
+            draw_table(c, table_data, x, top_down_y(y), col_widths=col_widths, row_heights=row_heights)
 
         elif command == "LINE_BREAK":
             # Reduce Y-coordinate by line height for spacing
