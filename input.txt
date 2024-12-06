@@ -1,10 +1,63 @@
-TEXT||Page 1 Heading||100||#FF6600
-TEXT||This is body text on page 1.||100||#000000
-LINE_BREAK
-TEXT||This is text after a line break.||100||#000000
-LINE_BREAK
-UNDERLINE||This line is underlined after two line breaks.||100||#000000
+# Cover Page
+IMAGE||assets/hero.jpg||0||606||595||370||true||true
+TEXT||The Ultimate Guide to a Stress-Free Move||100||150||36||#000000||none||Helvetica-Bold||center
+TEXT||Your step-by-step plan for an effortless moving experience.||100||200||16||#333333||none||Helvetica||center
 PAGE_BREAK
-TEXT||Page 2 Heading||100||#FF6600
+
+# Section 1: Comprehensive Moving Checklist
+TEXT||Step-by-Step Checklist||50||750||24||#333333||none||Helvetica-Bold||left
 LINE_BREAK
-TEXT||This is text on page 2 after a line break.||100||#000000
+LINE_BREAK
+TEXT||8 weeks out: Sort through belongings and declutter.||75||700||12||#000000||none||Helvetica||left
+TEXT||6 weeks out: Research and book a trusted moving service.||75||680||12||#000000||none||Helvetica||left
+TEXT||2 weeks out: Confirm arrangements with movers.||75||660||12||#000000||none||Helvetica||left
+TEXT||Moving Day: Pack a "First Night" essentials box.||75||640||12||#000000||none||Helvetica||left
+IMAGE||assets/background_cover.jpg||400||500||100||300||false||false
+PAGE_BREAK
+
+# Section 2: Money-Saving Tips
+TEXT||Save Money While Moving||50||750||24||#333333||none||Helvetica-Bold||left
+LINE_BREAK
+LINE_BREAK
+TEXT||Get free boxes from local stores or neighbors.||75||700||12||#000000||none||Helvetica||left
+TEXT||Avoid peak moving seasons for better deals.||75||680||12||#000000||none||Helvetica||left
+IMAGE||assets/background_cover.jpg||150||500||295||200||false||false
+PAGE_BREAK
+
+# Section 3: Budget Tracker
+TEXT||Track Your Moving Budget||50||750||24||#333333||none||Helvetica-Bold||left
+LINE_BREAK
+LINE_BREAK
+TABLE||[['Category', 'Budgeted', 'Actual'], ['Packing Supplies', '$50', '$45'], ['Movers', '$500', '$480'], ['Transportation', '$200', '$210'], ['Storage', '$100', '$90']]||50||700||[150, 150, 150]||[30, 30, 30, 30]
+IMAGE||assets/background_cover.jpg||150||500||295||150||false||false
+TEXT||Click here to access a customizable version of this tracker.||75||450||12||#0000FF||none||Helvetica||left
+PAGE_BREAK
+
+# Section 4: 5 Biggest Mistakes
+TEXT||Avoid These Common Moving Pitfalls||50||750||24||#333333||none||Helvetica-Bold||left
+LINE_BREAK
+LINE_BREAK
+TEXT||1. Underestimating Packing Time||75||700||12||#000000||none||Helvetica||left
+TEXT||2. Failing to Label Boxes Properly||75||680||12||#000000||none||Helvetica||left
+TEXT||3. Not Scheduling Utilities in Advance||75||660||12||#000000||none||Helvetica||left
+TEXT||4. Skipping Insurance for Valuables||75||640||12||#000000||none||Helvetica||left
+TEXT||5. Waiting Too Long to Book Movers||75||620||12||#000000||none||Helvetica||left
+IMAGE||assets/background_cover.jpg||150||500||295||150||false||false
+PAGE_BREAK
+
+# Section 5: Post-Move Organization Tips
+TEXT||Settle In Effortlessly||50||750||24||#333333||none||Helvetica-Bold||left
+LINE_BREAK
+LINE_BREAK
+TEXT||Unpack Essentials First||75||700||12||#000000||none||Helvetica||left
+TEXT||Set Up Utilities Immediately||75||680||12||#000000||none||Helvetica||left
+TEXT||Familiarize Yourself with Your New Neighborhood||75||660||12||#000000||none||Helvetica||left
+IMAGE||assets/background_cover.jpg||150||500||295||150||false||false
+PAGE_BREAK
+
+# Back Cover
+TEXT||Ready to Make Your Move Effortless?||100||750||24||#333333||none||Helvetica-Bold||center
+TEXT||Contact us today for a stress-free moving experience.||100||700||16||#000000||none||Helvetica||center
+IMAGE||assets/background_cover.jpg||150||500||295||150||false||false
+TEXT||Visit [Your Website] to Learn More!||150||400||16||#FF6600||none||Helvetica-Bold||center
+IMAGE||assets/background_cover.jpg||50||50||100||50||false||false
