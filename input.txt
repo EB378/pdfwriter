@@ -1,3 +1,69 @@
-TEXT||This is a heading||100||750||#FF6600
-UNDERLINE||This text is underlined||100||700||#000000
-IMAGE||assets/logo.png||50||600||150||75
+# Page 1: Title Page with Full-Width Header Background
+IMAGE||images/header_background.jpg||0||750||595||200
+TEXT||Download Your Free Moving Guide||50||740||#FFFFFF
+TEXT||RapiTrans – Make Your Move a Stress-Free Experience!||50||710||#FFFFFF
+IMAGE||images/moving_truck_boxes.jpg||50||640||500||200
+TEXT||"The ultimate checklist and money-saving tips – all in one place."||50||610||#32CD32
+
+# Table of Contents
+TEXT||Table of Contents||50||570||#007BFF
+TEXT||1. Moving Checklist||50||550||#000000
+TEXT||2. Money-Saving Tips||50||530||#000000
+TEXT||3. Budget Tracker||50||510||#000000
+TEXT||4. 5 Common Mistakes (and How to Avoid Them)||50||490||#000000
+
+# Moving Checklist
+TEXT||Moving Checklist||50||460||#007BFF
+TEXT||4 Weeks Before Moving||50||440||#32CD32
+IMAGE||images/calendar_icon.png||30||435||20||20
+TEXT||Start decluttering: donate, sell, or recycle items you no longer need.||50||420||#000000
+TEXT||Book your moving service early – especially during busy times.||50||400||#000000
+TEXT||Notify the postal service of your address change and update key institutions.||50||380||#000000
+
+TEXT||2 Weeks Before Moving||50||360||#32CD32
+IMAGE||images/calendar_icon.png||30||355||20||20
+TEXT||Start packing one room at a time.||50||340||#000000
+TEXT||Ensure fragile items are protected with bubble wrap or towels.||50||320||#000000
+TEXT||Disassemble large furniture and store screws in labeled bags.||50||300||#000000
+
+# Page 2: Continuation with Header Background
+IMAGE||images/header_background.jpg||0||750||595||200
+TEXT||Moving Day||50||740||#32CD32
+IMAGE||images/box_icon.png||30||735||20||20
+TEXT||Double-check essentials: keys, important documents, and chargers.||50||720||#000000
+TEXT||Clearly direct movers to where each box should go.||50||700||#000000
+
+# Money-Saving Tips
+TEXT||Money-Saving Tips||50||660||#007BFF
+TEXT||Free packing materials: Ask local grocery stores or neighbors for spare boxes.||50||640||#000000
+TEXT||Move on a weekday: Save money by avoiding weekend rates.||50||620||#000000
+TEXT||Pack yourself: Professional packing services cost more, but you can DIY to save time and money.||50||600||#000000
+
+# Budget Tracker
+TEXT||Budget Tracker||50||560||#007BFF
+TEXT||Expense||50||540||#000000
+TEXT||Estimated Cost (€)||200||540||#000000
+TEXT||Moving Service||50||520||#000000
+TEXT||150||200||520||#000000
+TEXT||Packing Materials||50||500||#000000
+TEXT||30||200||500||#000000
+TEXT||Travel Costs||50||480||#000000
+TEXT||20||200||480||#000000
+TEXT||Possible Extra Services||50||460||#000000
+TEXT||50||200||460||#000000
+TEXT||Total||50||440||#32CD32
+TEXT||250||200||440||#32CD32
+
+# 5 Common Mistakes
+TEXT||5 Common Mistakes (and How to Avoid Them)||50||400||#007BFF
+TEXT||1. Starting too late – Early planning saves time and money.||50||380||#000000
+TEXT||2. Forgetting address changes – Notify key parties early.||50||360||#000000
+TEXT||3. Overloading boxes – Avoid packing overly heavy boxes to ensure safe transport.||50||340||#000000
+TEXT||4. Underestimating costs – Prepare for unexpected expenses.||50||320||#000000
+TEXT||5. Neglecting important items – Keep passports, keys, and medications within reach.||50||300||#000000
+
+# Contact and Call-to-Action
+TEXT||Contact RapiTrans for a stress-free moving experience!||50||260||#000000
+TEXT||Email: info@rapitrans.fi||50||240||#32CD32
+TEXT||Phone: +358406299192||50||220||#32CD32
+TEXT||Website: rapitrans.crd.co||50||200||#32CD32

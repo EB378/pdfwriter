@@ -39,17 +39,32 @@ def draw_dimmed_text(c, text, x, y, dimming_factor=0.5, font="Helvetica", size=1
     draw_text(c, text, x, y, color=color, font=font, size=size)
 
 def draw_image(c, img_path, x, y, width=None, height=None, crop=False, dim=False):
-    """Draw an image with optional cropping and dimming."""
+    """
+    Draw an image on the canvas, optionally cropping, resizing, or dimming it.
+    """
     with Image.open(img_path) as img:
+        # Optional cropping
         if crop:
             img = img.crop((10, 10, img.width - 10, img.height - 10))
+        
+        # Optional dimming
         if dim:
             enhancer = ImageEnhance.Brightness(img)
             img = enhancer.enhance(0.5)
+        
+        # Convert to RGB if the mode is RGBA (JPEG does not support RGBA)
+        if img.mode == "RGBA":
+            img = img.convert("RGB")
+        
+        # Optional resizing
         if width and height:
             img = img.resize((width, height))
+        
+        # Save the processed image temporarily
         temp_img_path = "temp_image.jpg"
-        img.save(temp_img_path)
+        img.save(temp_img_path, "JPEG")
+        
+        # Draw the image on the canvas
         c.drawImage(temp_img_path, x, y, width=width, height=height, mask="auto")
 
 def parse_text_effects(c, text, x, y, effects):
