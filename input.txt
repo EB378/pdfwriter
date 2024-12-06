@@ -1,1 +1,3 @@
-
+TEXT||This is a heading||100||750||#FF6600
+UNDERLINE||This text is underlined||100||700||#000000
+IMAGE||assets/logo.png||50||600||150||75
