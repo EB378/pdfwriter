@@ -64,4 +64,4 @@ def create_pdf(file_name, instructions):
 
 if __name__ == "__main__":
     instructions = read_input("input.txt")
-    create_pdf("Generated_PDF.pdf", instructions)
+    create_pdf("Generated_PDF.pdf", instructions) 
